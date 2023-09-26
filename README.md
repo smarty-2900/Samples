@@ -1,58 +1,45 @@
 # Samples
-Pipeline 1: Python Flask Application
 
-Python Virtual Environment: The pipeline creates a Python virtual environment (venv) to isolate dependencies, ensuring a clean and consistent environment for the Flask application.
+# Pipeline Configurations
 
-Dependency Management: It installs Python dependencies listed in a 'requirements.txt' file using pip install -r requirements.txt.
+This repository includes pre-configured CI/CD pipelines for various types of applications and development stacks. Each pipeline is designed to automate the build and deployment process for a specific technology stack.
 
-Artifact Packaging: After building the Flask application, it archives the application into a ZIP file, making it ready for deployment or distribution.
+## Pipeline 1: Python Flask Application
 
-Ubuntu-Latest Agent: This pipeline uses the 'ubuntu-latest' agent, suitable for Python applications running on Linux environments.
+- **Python Virtual Environment:** Creates a Python virtual environment (venv) for isolating dependencies.
+- **Dependency Management:** Installs Python dependencies from 'requirements.txt'.
+- **Artifact Packaging:** Archives the Flask application into a ZIP file.
 
-Pipeline 2: Node.js Application
+## Pipeline 2: Node.js Application
 
-Node.js Installation: The pipeline installs Node.js 16.x, providing the required runtime environment for Node.js applications.
+- **Node.js Installation:** Installs Node.js 16.x for Node.js applications.
+- **NPM Dependencies:** Installs Node.js dependencies from 'package.json'.
+- **Artifact Publishing:** Copies and publishes project files as a 'drop' artifact.
 
-NPM Dependencies: It uses npm install to fetch and install Node.js dependencies listed in the 'package.json' file.
+## Pipeline 3: Java Maven Application
 
-Artifact Publishing: The project files are copied and published as a pipeline artifact named 'drop,' making it accessible for downstream stages or deployments.
+- **Java and Maven:** Expects a Java application managed by Apache Maven.
+- **Build and Package:** Runs 'mvn clean package' to compile, test, and package the application.
+- **Artifact Publication:** Publishes Maven build output as a 'maven-build' artifact.
 
-Ubuntu-Latest Agent: This pipeline also uses the 'ubuntu-latest' agent, suitable for Node.js applications running on Linux environments.
+## Pipeline 4: Java Ant Application
 
-Pipeline 3: Java Maven Application
+- **Java and Ant:** Designed for Java applications built with Apache Ant.
+- **Build:** Runs 'ant build' (customize 'build' with your Ant target) to build the Java application.
+- **Artifact Publication:** Publishes Ant build output as an 'ant-build' artifact.
 
-Java and Maven: The pipeline expects a Java application managed by Apache Maven. It runs 'mvn clean package' to compile, test, and package the application.
+## Pipeline 5: .NET Core Application
 
-Artifact Publication: The Maven build output, typically located in the 'target' directory, is published as a container artifact named 'maven-build,' allowing for further deployment or distribution.
+- **.NET Core Version:** Specify the .NET Core SDK version with the `dotnetVersion` variable.
+- **Build Configuration:** Performs 'dotnet build' and 'dotnet publish' for .NET Core applications.
+- **Artifact Generation:** Generates binaries and publishes them as build artifacts.
 
-Ubuntu-Latest Agent: This pipeline uses the 'ubuntu-latest' agent, which is suitable for Java applications and Maven builds.
+## Pipeline 6: ASP.NET Application
 
-Pipeline 4: Java Ant Application
+- **ASP.NET Solution:** Designed for ASP.NET applications within a Visual Studio solution (.sln).
+- **NuGet Package Installation:** Installs required NuGet packages.
+- **MSBuild Build:** Runs 'dotnet build' with specified configurations and project file(s).
+- **Artifact Publishing:** Publishes build artifacts generated during the ASP.NET build process.
 
-Java and Ant: This pipeline is designed for Java applications built with Apache Ant. It runs 'ant build' (replace 'build' with your Ant target) to build the Java application.
 
-Artifact Publication: The Ant build output, usually found in the 'build' directory, is published as a container artifact named 'ant-build,' making it accessible for downstream processes.
-
-Ubuntu-Latest Agent: Similar to the previous pipelines, it uses the 'ubuntu-latest' agent for Java and Ant-based builds.
-
-Pipeline 5: .NET Core Application
-
-.NET Core Version: The pipeline allows you to specify the version of the .NET Core SDK using the dotnetVersion variable. It's set to '6.0.x' by default.
-
-Build Configuration: The pipeline performs a 'dotnet build' and 'dotnet publish' for .NET Core applications, using the specified project file(s) and build configuration.
-
-Artifact Generation: It generates binaries, optionally zipped, and publishes them as build artifacts. The path to the project file(s) is customizable using the applicationPath parameter.
-
-Windows-Latest Agent: This pipeline uses the 'windows-latest' agent, suitable for .NET Core applications running on Windows environments.
-
-Pipeline 6: ASP.NET Application
-
-ASP.NET Solution: This pipeline is designed for ASP.NET applications managed within a Visual Studio solution file (.sln).
-
-NuGet Package Installation: It installs NuGet packages required for the ASP.NET application using the 'NuGetToolInstaller' task.
-
-MSBuild Build: The pipeline runs 'dotnet build' using MSBuild with specified build configuration and project file(s) defined in the solutionPath parameter.
-
-Artifact Publishing: It publishes build artifacts generated during the ASP.NET build process using the 'PublishBuildArtifacts' task.
-
-Windows-Latest Agent: This pipeline uses the 'windows-latest' agent, suitable for building and deploying ASP.NET applications on Windows platforms.
+Feel free to explore each pipeline's configuration for more details on how they work.
