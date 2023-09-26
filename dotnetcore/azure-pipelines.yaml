@@ -1,0 +1,58 @@
+name: dotnetcore.ci
+
+trigger:
+  branches:
+    include:
+      - dotnetcore-pipeline 
+    exclude:
+      - main
+  batch: true
+
+variables:
+  buildConfigurations: 'Release'
+  vmImageName: 'windows-latest'
+
+pool:
+  vmImage: $(vmImageName) # Use the variable for VM image
+
+parameters:
+  - name: applicationPath
+    type: string
+    default: '**/*.csproj'
+    displayName: 'Application Path' #Path to the application project file (e.g., **/*.csproj)
+
+stages:
+- stage: BuildAndPublish
+  jobs:
+  - job: Build
+    variables:
+      dotnetVersion: '6.0.x' # Define a job-specific variable
+    
+    steps:
+    - task: UseDotNet@2
+      displayName: 'Install .NET Core SDK'
+      inputs:
+        version: $(dotnetVersion)
+        installationPath: $(Agent.ToolsDirectory)/dotnet
+    
+    - task: DotNetCoreCLI@2
+      displayName: 'Build'
+      inputs:
+        command: 'build'
+        projects: ${{ parameters.applicationPath}} # Use the applicationPath parameter
+        arguments: '--configuration $(buildConfigurations)'
+  
+    - task: DotNetCoreCLI@2
+      displayName: 'Generate binaries'
+      inputs:
+        command: 'publish'
+        projects: ${{ parameters.applicationPath}} # Use the applicationPath parameter
+        publishWebProjects: False
+        arguments: '--configuration $(buildConfigurations) --output $(Build.ArtifactStagingDirectory)'
+        zipAfterPublish: true
+    
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish'
+      inputs:
+        PathtoPublish: $(Build.ArtifactStagingDirectory)
+        ArtifactName: "drop"
