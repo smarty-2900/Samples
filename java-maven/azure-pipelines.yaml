@@ -1,23 +1,27 @@
 trigger:
 - master
 
+parameters:
+- name: applicationPath
+  type: string
+  default: 'java-maven'  # Default path to the application if not specified
+
 pool:
   vmImage: 'ubuntu-latest'
 
 stages:
-
 - stage: BuildWithMaven
   jobs:
   - job: MavenBuild
     displayName: 'Build with Maven'
     steps:
     - script: |
-        cd java-maven  # Navigate to the directory containing your pom.xml for Maven
+        cd ${{parameters.applicationPath}}  # Navigate to the directory containing your pom.xml for Maven
         mvn clean package
       displayName: 'Maven Build'
+
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: 'java-maven/target'  # Adjust the path to your Maven build output
+        PathtoPublish: '${{parameters.applicationPath}}/target'  # Adjust the path to your Maven build output
         ArtifactName: 'maven-build'
         publishLocation: 'Container'
-
