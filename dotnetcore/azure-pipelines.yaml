@@ -2,7 +2,7 @@ name: dotnetcore.ci
 
 trigger:
  branches:
-   - master
+ - master
  batch: true
 
 variables:
