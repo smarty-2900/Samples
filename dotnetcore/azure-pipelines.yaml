@@ -1,7 +1,9 @@
 name: dotnetcore.ci
 
 trigger:
- - master
+ branches:
+   - master
+ batch: true
 
 variables:
   buildConfigurations: 'Release'
