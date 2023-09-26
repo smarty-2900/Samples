@@ -5,8 +5,11 @@
 
 trigger:
 - master
+
 parameters:
-  solutionPath: '**/*.sln'
+- name: solutionPath
+  type: string
+  default: '**/*.sln'
 
 pool:
   vmImage: 'windows-latest'
