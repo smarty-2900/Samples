@@ -18,7 +18,7 @@ pool:
 parameters:
   - name: applicationPath
     type: string
-    default: '**/*.csproj'
+    default: 'dotnetcore/**/*.csproj'
     displayName: 'Application Path' #Path to the application project file (e.g., **/*.csproj)
 
 stages:
