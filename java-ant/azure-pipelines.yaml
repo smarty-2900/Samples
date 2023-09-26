@@ -1,1 +1,18 @@
-i
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: BuildWithAnt
+  jobs:
+  - job: AntBuild
+    displayName: 'Build with Ant'
+    steps:
+    - script: |
+        cd java-ant  # Navigate to the directory containing your build.xml for Ant
+        ant build  # Replace 'build' with your Ant target
+      displayName: 'Ant Build'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: 'java-ant/build'  # Adjust the path to your Ant build output
+        ArtifactName: 'ant-build'
+        publishLocation: 'Container'
